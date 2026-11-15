@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My First Site & Supabase Test</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Includes Supabase JavaScript SDK directly from CDN -->
-  <script src="[suspicious link removed]"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hartwell Stamp Co. — POS</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <div class="card">
-    <h1>Welcome to My Starter Site</h1>
+  <div class="pos-container">
+    <!-- LEFT SIDE: MENU & ITEMS -->
+    <main class="menu-panel">
+      <header class="menu-header">
+        <h1>Menu</h1>
+        <span id="category-note" class="category-note"></span>
+      </header>
 
-    <!-- Make sure the filename matches your uploaded photo -->
-    <img src="pasted file.png" alt="My Dog" class="dog-photo">
+      <!-- Top Row: Categories (Category 1 - Category 5) -->
+      <nav id="category-bar" class="button-row category-row" aria-label="Categories"></nav>
 
-    <div>
-      <!-- Replace with any URL of your choice -->
-      <a href="https://sites.google.com/view/hartwellstampco/home" target="_blank" class="custom-link">Visit My Favorite Site</a>
-    </div>
+      <!-- Second Row: Subcategories (Sub 1 - Sub 5) -->
+      <div class="subcategory-wrapper">
+        <span class="row-label">Subcategory:</span>
+        <nav id="subcategory-bar" class="button-row subcategory-row" aria-label="Subcategories"></nav>
+      </div>
 
-    <hr>
+      <!-- Item Grid (2 columns matching 1POS frontend) -->
+      <section id="items-grid" class="items-grid"></section>
+    </main>
 
-    <!-- Status message connected to script.js -->
-    <div id="status">Connecting to Supabase</div>
+    <!-- RIGHT SIDE: RUNNING TOTAL / CHECKOUT -->
+    <aside class="cart-panel">
+      <h2>Running total</h2>
+
+      <div id="cart-items" class="cart-items">
+        <p class="empty-cart">No items added yet.</p>
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="subtotal-amount">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Taxes (<span id="tax-rate-display">7</span>%)</span>
+          <span id="tax-amount">$0.00</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span id="total-amount">$0.00</span>
+        </div>
+
+        <div class="cart-actions">
+          <button id="clear-btn" class="btn-secondary" type="button">Clear</button>
+          <button id="finalize-btn" class="btn-primary" type="button">Finalize</button>
+        </div>
+      </div>
+    </aside>
   </div>
 
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
