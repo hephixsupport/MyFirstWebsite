@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hartwell Stamp Co. — Menu setup</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    /* style.css locks the POS screen in place; this page needs to scroll */
+    body { height: auto; overflow: auto; }
+    [hidden] { display: none !important; }
+    .admin { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .admin-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .admin-top a, .admin-top button { margin-left: 10px; }
+    .back-link { color: var(--primary); font-weight: 600; text-decoration: none; }
+    .login-box { max-width: 340px; margin: 80px auto; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 24px; display: grid; gap: 12px; }
+    .login-box input { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; }
+    .admin section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; overflow-x: auto; }
+    .admin h2 { font-size: 1.15rem; margin-bottom: 10px; }
+    .admin table { width: 100%; border-collapse: collapse; }
+    .admin th { text-align: left; font-size: 0.85rem; color: var(--muted); padding: 4px 6px; }
+    .admin td { padding: 4px 6px; }
+    .admin td input { width: 100%; min-width: 90px; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; }
+    .admin td input:disabled { background: #eef0f3; color: var(--muted); }
+    .admin td button { padding: 8px 12px; border: 1px solid var(--border); background: var(--bg); border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .admin td button.danger { color: var(--danger); }
+    .err { color: var(--danger); }
+  </style>
+</head>
+<body>
+  <div id="login" class="login-box" hidden>
+    <h1>Menu setup</h1>
+    <input id="email" type="email" placeholder="Email" autocomplete="username" />
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+    <button id="login-btn" class="btn-primary" type="button">Sign in</button>
+    <p id="login-error" class="err"></p>
+  </div>
+
+  <div id="app" class="admin" hidden>
+    <div class="admin-top">
+      <h1>Menu setup</h1>
+      <div>
+        <a class="back-link" href="index.html">Back to register</a>
+        <button id="logout-btn" class="btn-secondary" type="button">Sign out</button>
+      </div>
+    </div>
+    <div id="tables"></div>
+  </div>
+
+  <script src="menu.js"></script>
+</body>
+</html>
