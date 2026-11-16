@@ -111,11 +111,9 @@ body {
 
 /* ITEMS GRID (2-column layout matching 1POS frontend) */
 .items-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
-  gap: 14px;
-  overflow-y: auto;
-  padding-right: 4px;
+  grid-template-columns: repeat(auto-fill, var(--card-size, 220px));
+  justify-content: start;
+  align-content: start;
 }
 
 .item-card {
