@@ -25,6 +25,10 @@
     .muted { color: var(--muted); font-size: 0.9rem; padding: 6px 2px; }
     button.small { padding: 6px 10px; border: 1px solid var(--border); background: var(--bg); border-radius: 6px; font-weight: 600; cursor: pointer; }
 
+    .size-options { display: flex; gap: 8px; flex-wrap: wrap; }
+    .size-options button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    #size-status { margin: 10px 0 0; }
+
     /* Folder tree */
     .tree details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; background: var(--panel); }
     .tree details.drop-hover { outline: 2px dashed var(--accent); background: #ecfdf5; }
@@ -67,12 +71,15 @@
 
     <section class="panel">
       <h2>Register display</h2>
-      <label>
-        Item icon size
-        <input id="card-size" type="range" min="120" max="400" step="10" value="220" />
-        <span id="card-size-label">220</span> px
-      </label>
-      <button id="save-size" class="btn-primary" type="button">Save size</button>
+      <p class="hint">Pick how big the item icons appear on the register.</p>
+      <div id="size-options" class="size-options">
+        <button type="button" class="small" data-size="120">Smallest</button>
+        <button type="button" class="small" data-size="170">Small</button>
+        <button type="button" class="small" data-size="220">Medium</button>
+        <button type="button" class="small" data-size="280">Large</button>
+        <button type="button" class="small" data-size="340">Largest</button>
+      </div>
+      <p id="size-status" class="hint"></p>
     </section>
 
     <section class="panel">
