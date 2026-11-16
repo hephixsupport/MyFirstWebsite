@@ -33,23 +33,34 @@ $("logout-btn").addEventListener("click", async () => {
   refresh();
 });
 
-// ---- Register icon size ----
-const sizeInput = $("card-size");
-sizeInput.addEventListener("input", () => {
-  $("card-size-label").textContent = sizeInput.value;
-});
+// ---- Register icon size (five presets) ----
+const sizeButtons = [...document.querySelectorAll("#size-options button")];
+
+function markSize(value) {
+  // Highlight the preset closest to the saved value
+  let best = null;
+  sizeButtons.forEach((btn) => {
+    btn.classList.remove("active");
+    if (!best || Math.abs(btn.dataset.size - value) < Math.abs(best.dataset.size - value)) best = btn;
+  });
+  if (best) best.classList.add("active");
+}
 
 async function loadSize() {
   const { data } = await db.from("settings").select("value").eq("key", "card_size").maybeSingle();
-  if (data) {
-    sizeInput.value = data.value;
-    $("card-size-label").textContent = data.value;
-  }
+  markSize(data ? data.value : 220);
 }
 
-$("save-size").addEventListener("click", async () => {
-  const { error } = await db.from("settings").upsert({ key: "card_size", value: sizeInput.value });
-  alert(error ? error.message : "Saved. Reload the register to see the new size.");
+$("size-options").addEventListener("click", async (e) => {
+  const btn = e.target.closest("button[data-size]");
+  if (!btn) return;
+  const { error } = await db.from("settings").upsert({ key: "card_size", value: btn.dataset.size });
+  if (error) {
+    $("size-status").textContent = "Could not save: " + error.message;
+    return;
+  }
+  markSize(btn.dataset.size);
+  $("size-status").textContent = "Saved. Reload the register to see the new size.";
 });
 
 // ---- Inventory tree ----
