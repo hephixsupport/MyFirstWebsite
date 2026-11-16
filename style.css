@@ -111,9 +111,11 @@ body {
 
 /* ITEMS GRID (2-column layout matching 1POS frontend) */
 .items-grid {
-  grid-template-columns: repeat(auto-fill, var(--card-size, 220px));
-  justify-content: start;
-  align-content: start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 14px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .item-card {
@@ -281,10 +283,24 @@ body {
   color: var(--text);
 }
 
+/* --- Item icons: square, sized by the Menu setup slider --- */
+.items-grid {
+  grid-template-columns: repeat(auto-fill, var(--card-size, 220px));
+  justify-content: start;
+  align-content: start;
+}
+.item-image {
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+/* --- Leave room for the Netlify badge --- */
 .cart-panel {
   padding-bottom: 72px;
 }
 
+/* --- Link to the menu setup page --- */
 .menu-btn {
   margin-left: auto;
   padding: 8px 14px;
