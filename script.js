@@ -29,6 +29,7 @@ const taxRateDisplayEl = document.getElementById("tax-rate-display");
 async function initPOS() {
   taxRateDisplayEl.textContent = (TAX_RATE * 100).toFixed(0);
 
+  // Saved icon size (set from the Menu setup page)
   const { data: setting } = await db.from("settings").select("value").eq("key", "card_size").maybeSingle();
   if (setting) document.documentElement.style.setProperty("--card-size", setting.value + "px");
 
