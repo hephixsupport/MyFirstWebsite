@@ -286,3 +286,15 @@ body {
 .cart-panel {
   padding-bottom: 72px;
 }
+
+.menu-btn {
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.menu-btn:hover { border-color: var(--primary); }
