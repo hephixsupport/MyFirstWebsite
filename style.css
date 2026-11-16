@@ -282,3 +282,7 @@ body {
   background: #e5e7eb;
   color: var(--text);
 }
+
+.cart-panel {
+  padding-bottom: 72px;
+}
