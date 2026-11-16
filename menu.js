@@ -40,8 +40,30 @@ async function refresh() {
   const { data: { session } } = await db.auth.getSession();
   $("login").hidden = !!session;
   $("app").hidden = !session;
-  if (session) loadAll();
+  if (session) {
+    loadAll();
+    loadSize();
+  }
 }
+
+// ---- Register icon size ----
+const sizeInput = $("card-size");
+sizeInput.addEventListener("input", () => {
+  $("card-size-label").textContent = sizeInput.value;
+});
+
+async function loadSize() {
+  const { data } = await db.from("settings").select("value").eq("key", "card_size").maybeSingle();
+  if (data) {
+    sizeInput.value = data.value;
+    $("card-size-label").textContent = data.value;
+  }
+}
+
+$("save-size").addEventListener("click", async () => {
+  const { error } = await db.from("settings").upsert({ key: "card_size", value: sizeInput.value });
+  alert(error ? error.message : "Saved. Reload the register to see the new size.");
+});
 
 $("login-btn").addEventListener("click", async () => {
   const { error } = await db.auth.signInWithPassword({
