@@ -29,6 +29,9 @@ const taxRateDisplayEl = document.getElementById("tax-rate-display");
 async function initPOS() {
   taxRateDisplayEl.textContent = (TAX_RATE * 100).toFixed(0);
 
+  const { data: setting } = await db.from("settings").select("value").eq("key", "card_size").maybeSingle();
+  if (setting) document.documentElement.style.setProperty("--card-size", setting.value + "px");
+
   const [catRes, subRes, itemRes] = await Promise.all([
     db.from("categories").select("*").order("code"),
     db.from("subcategories").select("*").order("code"),
