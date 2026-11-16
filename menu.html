@@ -10,22 +10,41 @@
     /* style.css locks the POS screen in place; this page needs to scroll */
     body { height: auto; overflow: auto; }
     [hidden] { display: none !important; }
-    .admin { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    .admin { max-width: 900px; margin: 0 auto; padding: 20px; }
     .admin-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .admin-top a, .admin-top button { margin-left: 10px; }
     .back-link { color: var(--primary); font-weight: 600; text-decoration: none; }
     .login-box { max-width: 340px; margin: 80px auto; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 24px; display: grid; gap: 12px; }
-    .login-box input { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; }
-    .admin section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; overflow-x: auto; }
-    .admin h2 { font-size: 1.15rem; margin-bottom: 10px; }
-    .admin table { width: 100%; border-collapse: collapse; }
-    .admin th { text-align: left; font-size: 0.85rem; color: var(--muted); padding: 4px 6px; }
-    .admin td { padding: 4px 6px; }
-    .admin td input { width: 100%; min-width: 90px; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; }
-    .admin td input:disabled { background: #eef0f3; color: var(--muted); }
-    .admin td button { padding: 8px 12px; border: 1px solid var(--border); background: var(--bg); border-radius: 6px; font-weight: 600; cursor: pointer; }
-    .admin td button.danger { color: var(--danger); }
+    input, select { padding: 9px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .panel h2 { font-size: 1.15rem; margin-bottom: 10px; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .panel-head h2 { margin: 0; }
+    .hint { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
     .err { color: var(--danger); }
+    .muted { color: var(--muted); font-size: 0.9rem; padding: 6px 2px; }
+    button.small { padding: 6px 10px; border: 1px solid var(--border); background: var(--bg); border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+    /* Folder tree */
+    .tree details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; background: var(--panel); }
+    .tree details.drop-hover { outline: 2px dashed var(--accent); background: #ecfdf5; }
+    .tree summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; font-weight: 600; }
+    .tree .cat > summary { background: #eef2ff; border-radius: 8px; }
+    .tree .sub { margin: 8px 12px; }
+    .tree .sub > summary { cursor: grab; font-weight: 500; }
+    .tree small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+    .actions { display: flex; gap: 6px; flex: none; }
+    .items { padding: 2px 12px 10px; }
+    .item { display: flex; align-items: center; gap: 10px; padding: 6px; border: 1px solid var(--border); border-radius: 8px; margin-top: 6px; background: #fff; cursor: grab; }
+    .item img, .item .thumb { width: 40px; height: 40px; object-fit: contain; background: #e5e7eb; border-radius: 6px; flex: none; }
+    .item .name { flex: 1; font-weight: 600; }
+    .item .price { color: var(--primary); font-weight: 700; }
+
+    /* Add / edit dialog */
+    dialog { border: 1px solid var(--border); border-radius: 10px; padding: 20px; width: min(420px, 92vw); }
+    dialog label { display: grid; gap: 4px; font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; }
+    .dialog-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; }
+    .dialog-actions .danger { color: var(--danger); margin-right: auto; }
   </style>
 </head>
 <body>
@@ -45,7 +64,8 @@
         <button id="logout-btn" class="btn-secondary" type="button">Sign out</button>
       </div>
     </div>
-    <section>
+
+    <section class="panel">
       <h2>Register display</h2>
       <label>
         Item icon size
@@ -54,8 +74,26 @@
       </label>
       <button id="save-size" class="btn-primary" type="button">Save size</button>
     </section>
-    <div id="tables"></div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Inventory</h2>
+        <button id="add-cat" class="small" type="button">+ Category</button>
+      </div>
+      <p class="hint">Drag an item onto a subcategory to move it. Drag a subcategory onto a category to move that too. Open both folders first so you can see where you're dropping.</p>
+      <div id="tree" class="tree"></div>
+    </section>
   </div>
+
+  <dialog id="editor">
+    <h2 id="editor-title"></h2>
+    <div id="editor-fields"></div>
+    <div class="dialog-actions">
+      <button id="editor-delete" class="small danger" type="button">Delete</button>
+      <button id="editor-cancel" class="small" type="button">Cancel</button>
+      <button id="editor-save" class="btn-primary" type="button">Save</button>
+    </div>
+  </dialog>
 
   <script src="menu.js"></script>
 </body>
